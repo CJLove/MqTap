@@ -7,14 +7,20 @@
 #
 
 
-all:	libmqtap.so
+all:	lib/libmqtap.so lib64/libmqtap.so
 
-mq_tap.o:	mq_tap.c
-	gcc -Wall -O2 -fpic -c ${CFLAGS} -o mq_tap.o mq_tap.c
+lib/mq_tap.o:	mq_tap.c
+	gcc -Wall -O2 -fpic -c ${CFLAGS} -o lib/mq_tap.o mq_tap.c
 
-libmqtap.so:	mq_tap.o 
-	gcc -Wall -O2 -fpic -shared -ldl -o libmqtap.so mq_tap.o
-#	/usr/bin/g++ -Wall -O2 -fpic -shared -ldl -o libmqtap.so mq_tap.c
+lib/libmqtap.so:	lib/mq_tap.o 
+	gcc -Wall -O2 -fpic -shared -ldl -o lib/libmqtap.so mq_tap.o
+
+lib64/mq_tap.o:	mq_tap.c
+	gcc -m64 -Wall -O2 -fpic -c ${CFLAGS} -o lib64/mq_tap.o mq_tap.c
+
+lib64/libmqtap.so:	lib64/mq_tap.o 
+	gcc -m64 -Wall -O2 -fpic -shared -ldl -o lib64/libmqtap.so mq_tap.o
+
 
 clean:
-	rm -f libmqtap.so *~ *.o
+	rm -f *~ lib/*.o lib/*.so lib64/*.o lib64/*.so
