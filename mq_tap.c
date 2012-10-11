@@ -63,9 +63,10 @@ static void mq_tap_log(const char *func, const char *data, const size_t len)
     if (len > 0) {
         printf("%s() called with data:\n",func);
         char *c = (char*)data;
-        for (i = 0; i < len; ++i) {
+        for (i = 1; i <= len; ++i) {
             printf("  0x%02x",*c);
             if ((i % 10) == 0) printf("\n");
+            ++c;
         }
         printf("\n");
     }
@@ -87,8 +88,8 @@ mqd_t mq_open(const char *__name, int __oflag, ...)
      * (first time only)
      */
     if (!librt_mq_open) {
-#if defined(RHEL)
-        handle = dlopen("/lib/tls/librt.so.1",RTLD_LAZY);
+#if defined(LIB64)
+        handle = dlopen("/lib64/librt.so.1",RTLD_LAZY);
 #else
         handle = dlopen("/lib/librt.so.1",RTLD_LAZY);
 #endif
@@ -146,8 +147,8 @@ int mq_close(mqd_t __mqdes)
      * (first time only)
      */
     if (!librt_mq_close) {
-#if defined(RHEL)
-        handle = dlopen("/lib/tls/librt.so.1",RTLD_LAZY);
+#if defined(LIB64)
+        handle = dlopen("/lib64/librt.so.1",RTLD_LAZY);
 #else
         handle = dlopen("/lib/librt.so.1",RTLD_LAZY);
 #endif
@@ -185,8 +186,8 @@ int mq_unlink(const char *__name)
      * (first time only)
      */
     if (!librt_mq_unlink) {
-#if defined(RHEL)
-        handle = dlopen("/lib/tls/librt.so.1",RTLD_LAZY);
+#if defined(LIB64)
+        handle = dlopen("/lib64/librt.so.1",RTLD_LAZY);
 #else
         handle = dlopen("/lib/librt.so.1",RTLD_LAZY);
 #endif
@@ -225,8 +226,8 @@ int mq_send(mqd_t __mqdes, const char *__msg_ptr, size_t __msg_len,
      * (first time only)
      */
     if (!librt_mq_send) {
-#if defined(RHEL)
-        handle = dlopen("/lib/tls/librt.so.1",RTLD_LAZY);
+#if defined(LIB64)
+        handle = dlopen("/lib64/librt.so.1",RTLD_LAZY);
 #else
         handle = dlopen("/lib/librt.so.1",RTLD_LAZY);
 #endif
@@ -272,8 +273,8 @@ ssize_t mq_receive(mqd_t __mqdes, char *__msg_ptr, size_t __msg_len,
      * (first time only)
      */
     if (!librt_mq_receive) {
-#if defined(RHEL)
-        handle = dlopen("/lib/tls/librt.so.1",RTLD_LAZY);
+#if defined(LIB64)
+        handle = dlopen("/lib64/librt.so.1",RTLD_LAZY);
 #else
         handle = dlopen("/lib/librt.so.1",RTLD_LAZY);
 #endif

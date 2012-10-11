@@ -18,7 +18,7 @@ main(int argc, char **argv)
 	len = atoi(argv[2]);
 	prio = atoi(argv[3]);
 
-	mqd = mq_open(argv[1], O_CREAT|O_WRONLY);
+	mqd = mq_open(argv[1], O_WRONLY);
 
 	ptr = calloc(len, sizeof(char));
 
